@@ -432,57 +432,6 @@ header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
 }
 .contact-links a:hover { color: var(--accent-teal); border-color: var(--accent-teal); }
 
-/* ── contact QRs ───────────────────────────────────── */
-.contact-qrs {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  max-width: 480px;
-}
-.qr-card {
-  background: rgba(255, 247, 241, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(42, 34, 29, 0.08);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.85rem;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-}
-.qr-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-.qr-card img {
-  width: 100%;
-  max-width: 220px;
-  aspect-ratio: 1;
-  display: block;
-  image-rendering: pixelated;
-  background: white;
-  padding: 8px;
-  border-radius: 6px;
-}
-.qr-card .qr-label {
-  text-align: center;
-}
-.qr-card .qr-label p {
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: var(--fg);
-  margin: 0;
-}
-.qr-card .qr-label span {
-  font-size: 0.78rem;
-  color: var(--fg-muted);
-}
-@media (max-width: 480px) {
-  .contact-qrs { grid-template-columns: 1fr; max-width: 280px; }
-}
-
 /* ── footer ────────────────────────────────────────── */
 footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 .footer-inner {
@@ -498,6 +447,78 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 /* ── reduced motion ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .hero-title em, .hero-currently::before, .about-portrait { animation: none; }
+}
+
+/* ── lightbox ──────────────────────────────────────── */
+.card-media { cursor: pointer; }
+.card-media::after {
+  content: "▶ Play full";
+  position: absolute; bottom: 10px; right: 10px;
+  background: rgba(42, 34, 29, 0.78);
+  color: #fff7f1;
+  font-size: 0.72rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(4px);
+  pointer-events: none;
+  font-weight: 500;
+  z-index: 2;
+}
+.card:hover .card-media::after { opacity: 1; transform: translateY(0); }
+@media (hover: none) {
+  .card-media::after { opacity: 0.85; transform: translateY(0); }
+}
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(20, 16, 14, 0.92);
+  backdrop-filter: blur(12px);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lightbox.open {
+  display: flex;
+  opacity: 1;
+}
+.lightbox-content {
+  width: 100%; max-width: 1200px;
+  max-height: 90vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.lightbox-content video {
+  width: 100%; max-height: 90vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+  background: black;
+}
+.lightbox-close {
+  position: absolute; top: 20px; right: 24px;
+  width: 44px; height: 44px;
+  background: rgba(255, 247, 241, 0.12);
+  border: 1px solid rgba(255, 247, 241, 0.2);
+  color: #fff7f1;
+  font-size: 1.6rem;
+  font-weight: 300;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+.lightbox-close:hover {
+  background: rgba(255, 247, 241, 0.22);
+  transform: rotate(90deg);
+}
+@media (max-width: 720px) {
+  .lightbox { padding: 1rem; }
+  .lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1.4rem; }
 }
 </style>
 </head>
@@ -599,8 +620,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge">AWE 2025 · Main Stage</div>
-        <video muted loop playsinline preload="none" poster="media/pool-poster.jpg">
-          <source data-src="media/pool.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/pool-poster.jpg" data-full="media/pool.mp4">
+          <source data-src="media/pool-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -613,8 +634,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">XRCC Finalist 2026</div>
-        <video muted loop playsinline preload="none" poster="media/darts-poster.jpg">
-          <source data-src="media/bullsai.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/darts-poster.jpg" data-full="media/bullsai.mp4">
+          <source data-src="media/bullsai-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -627,8 +648,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge">Meta Presence Winner 2024</div>
-        <video muted loop playsinline preload="none" poster="media/iyo-vr-poster.jpg">
-          <source data-src="media/iyo-vr.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/iyo-vr-poster.jpg" data-full="media/iyo-vr.mp4">
+          <source data-src="media/iyo-vr-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -642,8 +663,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">Spectacles Winner 2026</div>
-        <video muted loop playsinline preload="none" poster="media/iyo-roll-poster.jpg">
-          <source data-src="media/iyo-roll.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/iyo-roll-poster.jpg" data-full="media/iyo-roll.mp4">
+          <source data-src="media/iyo-roll-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -656,8 +677,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">Spectacles Winner 2026</div>
-        <video muted loop playsinline preload="none" poster="media/whereabouts-poster.jpg">
-          <source data-src="media/whereabouts.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/whereabouts-poster.jpg" data-full="media/whereabouts.mp4">
+          <source data-src="media/whereabouts-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -670,8 +691,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">Spectacles Winner 2026</div>
-        <video muted loop playsinline preload="none" poster="media/asym-poster.jpg">
-          <source data-src="media/asym.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/asym-poster.jpg" data-full="media/asym.mp4">
+          <source data-src="media/asym-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -695,8 +716,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/specdeck-poster.jpg">
-          <source data-src="media/specdeck.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/specdeck-poster.jpg" data-full="media/specdeck.mp4">
+          <source data-src="media/specdeck-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -708,8 +729,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/blobble-poster.jpg">
-          <source data-src="media/blobble.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/blobble-poster.jpg" data-full="media/blobble.mp4">
+          <source data-src="media/blobble-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -722,8 +743,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <!-- FLOW — re-enable when media/flow.mp4 + media/flow-poster.jpg are added
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/flow-poster.jpg">
-          <source data-src="media/flow.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/flow-poster.jpg" data-full="media/flow.mp4">
+          <source data-src="media/flow-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -738,8 +759,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">Spectacles Winner 2026</div>
-        <video muted loop playsinline preload="none" poster="media/bitfarm-poster.jpg">
-          <source data-src="media/bittown.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/bitfarm-poster.jpg" data-full="media/bittown.mp4">
+          <source data-src="media/bittown-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -751,8 +772,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/dance-poster.jpg">
-          <source data-src="media/griddash.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/dance-poster.jpg" data-full="media/griddash.mp4">
+          <source data-src="media/griddash-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -764,8 +785,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/fishing-poster.jpg">
-          <source data-src="media/tabletoptides.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/fishing-poster.jpg" data-full="media/tabletoptides.mp4">
+          <source data-src="media/tabletoptides-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
@@ -849,25 +870,18 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   <div class="contact-links">
     <a href="https://ohi.studio" target="_blank" rel="noopener">ohi.studio</a>
     <a href="https://github.com/ohistudio" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://linkedin.com/in/[handle]" target="_blank" rel="noopener">LinkedIn</a>
-  </div>
-  <div class="contact-qrs">
-    <div class="qr-card">
-      <img src="data:image/png;base64,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" alt="WeChat QR — scan to add me as friend" />
-      <div class="qr-label">
-        <p>WeChat</p>
-        <span>微信 · 加我为好友</span>
-      </div>
-    </div>
-    <div class="qr-card">
-      <img src="data:image/png;base64,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" alt="Linktree QR — all my links" />
-      <div class="qr-label">
-        <p>All my links</p>
-        <span>Portfolio · contact · socials</span>
-      </div>
-    </div>
+    <a href="https://www.linkedin.com/in/liammasonxr/" target="_blank" rel="noopener">LinkedIn</a>
   </div>
 </section>
+
+
+<!-- ── lightbox for full clips ─────────────────────────── -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <div class="lightbox-content">
+    <video id="lightboxVideo" controls playsinline preload="metadata"></video>
+  </div>
+</div>
 
 <footer>
   <div class="container footer-inner">
@@ -1034,21 +1048,72 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
 
   // ─── lazy-load card videos ──────────────────────────────
+  function activateVideo(v) {
+    if (v.dataset.activated) return;
+    v.dataset.activated = '1';
+    v.querySelectorAll('source[data-src]').forEach(s => {
+      s.src = s.dataset.src;
+      s.removeAttribute('data-src');
+    });
+    v.load();
+    // iOS Safari needs a beat after load() before play() will reliably fire
+    const tryPlay = () => v.play().catch(() => {});
+    if (v.readyState >= 2) {
+      tryPlay();
+    } else {
+      v.addEventListener('loadeddata', tryPlay, { once: true });
+      // fallback: force play attempt after 500ms in case loadeddata never fires
+      setTimeout(tryPlay, 500);
+    }
+  }
+
   const videoIO = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const v = entry.target;
-        v.querySelectorAll('source[data-src]').forEach(s => {
-          s.src = s.dataset.src;
-          s.removeAttribute('data-src');
-        });
-        v.load();
-        v.play().catch(() => {});
-        obs.unobserve(v);
+        activateVideo(entry.target);
+        obs.unobserve(entry.target);
       }
     });
-  }, { rootMargin: '200px 0px', threshold: 0.01 });
-  document.querySelectorAll('.card-media video').forEach(v => videoIO.observe(v));
+  }, { rootMargin: '400px 0px', threshold: 0.01 });
+
+  // Activate the first project card immediately — it's usually visible/imminent
+  const allCardVideos = document.querySelectorAll('.card-media video');
+  allCardVideos.forEach((v, i) => {
+    if (i === 0) {
+      activateVideo(v);
+    } else {
+      videoIO.observe(v);
+    }
+  });
+
+
+  // ─── lightbox: click card to play full clip ─────────────
+  const lightbox = document.getElementById('lightbox');
+  const lightboxVideo = document.getElementById('lightboxVideo');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(fullSrc) {
+    lightboxVideo.src = fullSrc;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lightboxVideo.play().catch(() => {});
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxVideo.pause();
+    lightboxVideo.src = '';
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.card-media').forEach(cm => {
+    const v = cm.querySelector('video');
+    if (!v || !v.dataset.full) return;
+    cm.addEventListener('click', () => openLightbox(v.dataset.full));
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
 
   // ─── scroll reveal ──────────────────────────────────────
   const io = new IntersectionObserver((entries) => {
