@@ -451,6 +451,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
 /* ── lightbox ──────────────────────────────────────── */
 .card-media { cursor: pointer; }
+.card-media video { position: relative; z-index: 1; }
 .card-media::after {
   content: "▶ Play full";
   position: absolute; bottom: 10px; right: 10px;
@@ -465,7 +466,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   transform: translateY(4px);
   pointer-events: none;
   font-weight: 500;
-  z-index: 2;
+  z-index: 3;
 }
 .card:hover .card-media::after { opacity: 1; transform: translateY(0); }
 @media (hover: none) {
@@ -473,52 +474,62 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 }
 .lightbox {
   position: fixed; inset: 0;
-  background: rgba(20, 16, 14, 0.92);
-  backdrop-filter: blur(12px);
+  background: rgba(20, 16, 14, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: none;
   align-items: center; justify-content: center;
   z-index: 1000;
-  padding: 2rem;
+  padding: 3vmin;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease;
+  cursor: pointer;
 }
 .lightbox.open {
   display: flex;
   opacity: 1;
 }
-.lightbox-content {
-  width: 100%; max-width: 1200px;
-  max-height: 90vh;
-  display: flex; align-items: center; justify-content: center;
+.lightbox video {
+  max-width: min(94vw, 1400px);
+  max-height: 88vh;
+  width: auto; height: auto;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.45),
+    0 0 120px rgba(255, 107, 122, 0.15);
+  background: #0a0805;
+  display: block;
+  transform: scale(0.96);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: default;
 }
-.lightbox-content video {
-  width: 100%; max-height: 90vh;
-  border-radius: var(--radius-md);
-  box-shadow: 0 30px 90px rgba(0,0,0,0.5);
-  background: black;
-}
+.lightbox.open video { transform: scale(1); }
 .lightbox-close {
-  position: absolute; top: 20px; right: 24px;
-  width: 44px; height: 44px;
-  background: rgba(255, 247, 241, 0.12);
-  border: 1px solid rgba(255, 247, 241, 0.2);
+  position: absolute; top: 24px; right: 28px;
+  width: 48px; height: 48px;
+  background: rgba(255, 247, 241, 0.1);
+  border: 1px solid rgba(255, 247, 241, 0.18);
   color: #fff7f1;
-  font-size: 1.6rem;
-  font-weight: 300;
+  font-size: 1.7rem;
+  font-weight: 200;
   cursor: pointer;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.25s ease, transform 0.3s ease, border-color 0.25s ease;
   line-height: 1;
   padding: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .lightbox-close:hover {
-  background: rgba(255, 247, 241, 0.22);
+  background: rgba(255, 107, 122, 0.25);
+  border-color: rgba(255, 107, 122, 0.5);
   transform: rotate(90deg);
 }
 @media (max-width: 720px) {
-  .lightbox { padding: 1rem; }
-  .lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1.4rem; }
+  .lightbox { padding: 4vmin; }
+  .lightbox video { border-radius: 14px; max-width: 96vw; max-height: 82vh; }
+  .lightbox-close { top: 14px; right: 14px; width: 40px; height: 40px; font-size: 1.4rem; }
 }
 </style>
 </head>
@@ -878,9 +889,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 <!-- ── lightbox for full clips ─────────────────────────── -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
-  <div class="lightbox-content">
-    <video id="lightboxVideo" controls playsinline preload="metadata"></video>
-  </div>
+  <video id="lightboxVideo" playsinline autoplay loop muted preload="metadata"></video>
 </div>
 
 <footer>
@@ -1076,10 +1085,10 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     });
   }, { rootMargin: '400px 0px', threshold: 0.01 });
 
-  // Activate the first project card immediately — it's usually visible/imminent
+  // Activate the first 4 project cards immediately — the featured row is always above-the-fold or imminent
   const allCardVideos = document.querySelectorAll('.card-media video');
   allCardVideos.forEach((v, i) => {
-    if (i === 0) {
+    if (i < 4) {
       activateVideo(v);
     } else {
       videoIO.observe(v);
