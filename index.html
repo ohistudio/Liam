@@ -474,20 +474,21 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 }
 .lightbox {
   position: fixed; inset: 0;
-  background: rgba(20, 16, 14, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(20, 16, 14, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   display: none;
   align-items: center; justify-content: center;
   z-index: 1000;
   padding: 3vmin;
-  opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: background 0.45s ease, backdrop-filter 0.45s ease, -webkit-backdrop-filter 0.45s ease;
   cursor: pointer;
 }
 .lightbox.open {
   display: flex;
-  opacity: 1;
+  background: rgba(20, 16, 14, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .lightbox video {
   max-width: min(94vw, 1400px);
@@ -499,11 +500,16 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     0 0 120px rgba(255, 107, 122, 0.15);
   background: #0a0805;
   display: block;
-  transform: scale(0.96);
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* spring-easing bounce — overshoots then settles */
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
   cursor: default;
 }
-.lightbox.open video { transform: scale(1); }
+.lightbox.open video {
+  transform: scale(1);
+  opacity: 1;
+}
 .lightbox-close {
   position: absolute; top: 24px; right: 28px;
   width: 48px; height: 48px;
@@ -515,17 +521,28 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   cursor: pointer;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.25s ease, transform 0.3s ease, border-color 0.25s ease;
+  transition: background 0.25s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, opacity 0.35s ease 0.15s;
   line-height: 1;
   padding: 0;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: scale(0.5) rotate(-90deg);
+}
+.lightbox.open .lightbox-close {
+  opacity: 1;
+  transform: scale(1) rotate(0);
 }
 .lightbox-close:hover {
   background: rgba(255, 107, 122, 0.25);
   border-color: rgba(255, 107, 122, 0.5);
-  transform: rotate(90deg);
+  transform: scale(1.08) rotate(90deg);
 }
+.lightbox-close:active {
+  transform: scale(0.92) rotate(90deg);
+}
+/* Card click feedback — subtle pulse */
+.card-media:active video { transform: scale(0.985); transition: transform 0.15s ease; }
 @media (max-width: 720px) {
   .lightbox { padding: 4vmin; }
   .lightbox video { border-radius: 14px; max-width: 96vw; max-height: 82vh; }
@@ -1064,15 +1081,25 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       s.src = s.dataset.src;
       s.removeAttribute('data-src');
     });
+    // iOS Safari needs autoplay attribute set explicitly for in-card loops
+    v.setAttribute('autoplay', '');
+    v.muted = true;
+    v.playsInline = true;
     v.load();
-    // iOS Safari needs a beat after load() before play() will reliably fire
-    const tryPlay = () => v.play().catch(() => {});
+    const tryPlay = () => {
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {
+        // If autoplay blocked, try once more after first user touch anywhere
+        const retry = () => { v.play().catch(() => {}); document.removeEventListener('touchstart', retry); document.removeEventListener('click', retry); };
+        document.addEventListener('touchstart', retry, { once: true });
+        document.addEventListener('click', retry, { once: true });
+      });
+    };
     if (v.readyState >= 2) {
       tryPlay();
     } else {
       v.addEventListener('loadeddata', tryPlay, { once: true });
-      // fallback: force play attempt after 500ms in case loadeddata never fires
-      setTimeout(tryPlay, 500);
+      setTimeout(tryPlay, 600);
     }
   }
 
