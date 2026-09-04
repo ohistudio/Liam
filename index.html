@@ -268,6 +268,8 @@ header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
 }
 .card:hover .card-media img { transform: scale(1.04); }
 .card-media.is-link::after { content: "Open ↗"; }
+.card-media.is-still::after { display: none; }
+.card-media.is-still { cursor: default; }
 .card-link {
   display: inline-block;
   margin-top: 0.55rem;
@@ -652,7 +654,8 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       <div class="card-body">
         <div class="card-meta"><span>2025–</span><span class="tag">AR</span></div>
         <h3 class="card-title">Pool Assist</h3>
-        <p class="card-desc">[Real-time shot trajectory overlay for pool players, replace.]</p>
+        <p class="card-desc">Real-time shot lines for pool, drawn on the table through your glasses. On-device ball and pocket detection, ghost-ball solver, and a heads-up shot HUD. AWE main stage 2025.</p>
+        <a class="card-link" href="https://ohi.studio/pool" target="_blank" rel="noopener">ohi.studio/pool ↗</a>
       </div>
     </article>
     <article class="card reveal">
@@ -671,15 +674,30 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <div class="card-badge">Meta Presence Winner 2024</div>
-        <video muted loop playsinline preload="none" poster="media/blobble-poster.jpg" data-full="media/blobble.mp4">
-          <source data-src="media/blobble-preview.mp4" type="video/mp4">
+        <div class="card-badge teal">Lenslist Winner</div>
+        <video muted loop playsinline preload="none" poster="media/whenabouts-poster.jpg" data-full="media/whenabouts.mp4">
+          <source data-src="media/whenabouts-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2024–</span><span class="tag">MR · AR</span></div>
-        <h3 class="card-title">Blobble</h3>
-        <p class="card-desc">Puzzle Bobble meets billiards in your actual room. Won the Casual &amp; Social Gaming category of Meta's 2024 Presence Platform Hackathon on Quest, then came to Specs.</p>
+        <div class="card-meta"><span>2026</span><span class="tag">AI · Glasses</span></div>
+        <h3 class="card-title">Whenabouts</h3>
+        <p class="card-desc">Point your glasses at a fossil, rock or creature and find out when it lived. AI guides plus live geology and wildlife data, on a 600-pixel display.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <div class="card-badge teal">Spectacles Winner 2026</div>
+        <video muted loop playsinline preload="none" poster="media/whereabouts-poster.jpg" data-full="media/whereabouts.mp4">
+          <source data-src="media/whereabouts-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Whereabouts</h3>
+        <p class="card-desc">GeoGuessr for your glasses. Ten landmarks a day, turn and point at where you think each one is, and see how far off you were. Streaks and a global board.</p>
+        <a class="card-link" href="https://ohi.studio/whereabouts" target="_blank" rel="noopener">ohi.studio/whereabouts ↗</a>
       </div>
     </article>
 
@@ -708,16 +726,19 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <span class="card-link">ohi.studio/lisso ↗</span>
       </div>
     </a>
+
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/iyo-vr-poster.jpg" data-full="media/iyo-vr.mp4">
-          <source data-src="media/iyo-vr-preview.mp4" type="video/mp4">
+        <div class="card-badge">Meta Presence Winner 2024</div>
+        <video muted loop playsinline preload="none" data-full="media/iyo-vr.mp4">
+          <source data-src="media/iyo-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2024</span><span class="tag teal">VR</span></div>
+        <div class="card-meta"><span>2024</span><span class="tag">VR</span></div>
         <h3 class="card-title">Iyo</h3>
-        <p class="card-desc">[Short pitch for the Iyo VR game, replace.]</p>
+        <p class="card-desc">Merge matching Iyos and guide them through portals with limited room. Bigger Iyos take more space, so every move is a plan. VR and mixed reality on Meta Quest. Won Casual &amp; Social Gaming at Meta's 2024 Presence Platform Hackathon.</p>
+        <a class="card-link" href="https://ohi.studio/iyo" target="_blank" rel="noopener">ohi.studio/iyo ↗</a>
       </div>
     </article>
   </div>
@@ -737,17 +758,17 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <div class="card-badge teal">Spectacles Winner 2026</div>
-        <video muted loop playsinline preload="none" poster="media/whereabouts-poster.jpg" data-full="media/whereabouts.mp4">
-          <source data-src="media/whereabouts-preview.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/blobble-poster.jpg" data-full="media/blobble.mp4">
+          <source data-src="media/blobble-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Whereabouts</h3>
-        <p class="card-desc">[Location-anchored AR storytelling, replace.]</p>
+        <div class="card-meta"><span>2024</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Blobble</h3>
+        <p class="card-desc">Puzzle Bobble meets billiards in your actual room. Flick jelly blobs at the wall, merge matching colours, clear the board before it fills.</p>
       </div>
     </article>
+
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">Spectacles Winner 2026</div>
@@ -773,66 +794,17 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <p class="card-desc">The Specs port of FurSight, rebuilt as a pet-care Lens. An on-device model tracks your rabbit, and care notes and health checks float next to the hutch where you actually need them.</p>
       </div>
     </article>
-    <article class="card reveal">
-      <div class="card-media">
-        <video muted loop playsinline preload="none" data-full="media/wibble.mp4">
-          <source data-src="media/wibble-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Wibble</h3>
-        <p class="card-desc">Jelly blobs you pinch, throw and squash together. A mixed-reality colour puzzle: merge primaries until you hit the target colour. Also runs as shared-space multiplayer.</p>
-      </div>
-    </article>
 
     <article class="card reveal">
       <div class="card-media">
-        <div class="card-badge teal">Spectacles Winner 2026</div>
-        <video muted loop playsinline preload="none" poster="media/bitfarm-poster.jpg" data-full="media/bittown.mp4">
-          <source data-src="media/bittown-preview.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" data-full="media/overshoulder.mp4">
+          <source data-src="media/overshoulder-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Bittown</h3>
-        <p class="card-desc">[One-line description.]</p>
-      </div>
-    </article>
-    <article class="card reveal">
-      <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/specdeck-poster.jpg" data-full="media/specdeck.mp4">
-          <source data-src="media/specdeck-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2024</span><span class="tag">AR</span></div>
-        <h3 class="card-title">SpecDeck</h3>
-        <p class="card-desc">[One-line description.]</p>
-      </div>
-    </article>
-    <article class="card reveal">
-      <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/dance-poster.jpg" data-full="media/griddash.mp4">
-          <source data-src="media/griddash-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Griddash</h3>
-        <p class="card-desc">[One-line description.]</p>
-      </div>
-    </article>
-    <article class="card reveal">
-      <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/fishing-poster.jpg" data-full="media/tabletoptides.mp4">
-          <source data-src="media/tabletoptides-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Tabletop Tides</h3>
-        <p class="card-desc">[One-line description.]</p>
+        <div class="card-meta"><span>2026</span><span class="tag">AI · AR</span></div>
+        <h3 class="card-title">OverShoulder</h3>
+        <p class="card-desc">Pros don't record tutorials, so OverShoulder watches one. An expert does the job wearing Specs, the Lens captures each step where it happened, and the next person sees the instructions floating on the actual valve, plant or engine.</p>
       </div>
     </article>
   </div>
@@ -886,6 +858,72 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       </div>
     </article>
 
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" poster="media/dance-poster.jpg" data-full="media/griddash.mp4">
+          <source data-src="media/griddash-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Griddash</h3>
+        <p class="card-desc">Grid Rush, my take on an exergame for Specs. Tiles light up on the floor, you get there before they vanish, the pace climbs.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" poster="media/fishing-poster.jpg" data-full="media/tabletoptides.mp4">
+          <source data-src="media/tabletoptides-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Tabletop Tides</h3>
+        <p class="card-desc">A pond on your table. Cast from a tiny boat, feel for the bite, land the fish before the tide turns.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <div class="card-badge teal">Spectacles Winner 2026</div>
+        <video muted loop playsinline preload="none" poster="media/bitfarm-poster.jpg" data-full="media/bittown.mp4">
+          <source data-src="media/bittown-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Bittown</h3>
+        <p class="card-desc">[One-line description.]</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" poster="media/specdeck-poster.jpg" data-full="media/specdeck.mp4">
+          <source data-src="media/specdeck-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2024</span><span class="tag">AR</span></div>
+        <h3 class="card-title">SpecDeck</h3>
+        <p class="card-desc">[One-line description.]</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/wibble.mp4">
+          <source data-src="media/wibble-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Wibble</h3>
+        <p class="card-desc">Jelly blobs you pinch, throw and squash together. A mixed-reality colour puzzle: merge primaries until you hit the target colour. Also runs as shared-space multiplayer.</p>
+      </div>
+    </article>
+
   </div>
 
 
@@ -915,19 +953,6 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
     <article class="card reveal">
       <div class="card-media">
-        <div class="card-badge teal">Lenslist Winner</div>
-        <video muted loop playsinline preload="none" poster="media/whenabouts-poster.jpg" data-full="media/whenabouts.mp4">
-          <source data-src="media/whenabouts-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2026</span><span class="tag">AI · Glasses</span></div>
-        <h3 class="card-title">Whenabouts</h3>
-        <p class="card-desc">Point your glasses at a fossil, rock or creature and find out when it lived. AI guides plus live geology and wildlife data, on a 600-pixel display.</p>
-      </div>
-    </article>
-    <article class="card reveal">
-      <div class="card-media">
         <video muted loop playsinline preload="none" poster="media/airmeter-poster.jpg" data-full="media/airmeter.mp4">
           <source data-src="media/airmeter-preview.mp4" type="video/mp4">
         </video>
@@ -936,6 +961,72 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <div class="card-meta"><span>2026</span><span class="tag">Glasses</span></div>
         <h3 class="card-title">AirMeter</h3>
         <p class="card-desc">Live air quality, pollen and UV for wherever you're standing, drawn as a drifting particle field on the Meta Ray-Ban Display.</p>
+        <a class="card-link" href="https://ohi.studio/airmeter" target="_blank" rel="noopener">ohi.studio/airmeter ↗</a>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/flow.mp4">
+          <source data-src="media/flow-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">Glasses</span></div>
+        <h3 class="card-title">Flow</h3>
+        <p class="card-desc">Speed-reading for the Display. Paste anything, and Flow streams it one word at a time in the middle of your vision, paced by the D-pad.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/hereabouts.mp4">
+          <source data-src="media/hereabouts-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AI · Glasses</span></div>
+        <h3 class="card-title">Hereabouts</h3>
+        <p class="card-desc">The big Whenabouts update: 46 AI guides across eight kinds of "abouts", so whatever you point at, something here knows about it.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/whereabouts-mrbd.mp4">
+          <source data-src="media/whereabouts-mrbd-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">Glasses</span></div>
+        <h3 class="card-title">Whereabouts for Display</h3>
+        <p class="card-desc">Daily compass guessing game. Ten landmarks, turn your head to point at where you think they are, keep your streak, climb the global board.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/sniffabouts.mp4">
+          <source data-src="media/sniffabouts-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">Glasses</span></div>
+        <h3 class="card-title">Sniffabouts</h3>
+        <p class="card-desc">Dog-walk territory game. Every walk claims tiles on a shared map, and other dogs can claim them back. Wee holds a tile for three days, poo for seven.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/runchkin.mp4">
+          <source data-src="media/runchkin-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">Glasses</span></div>
+        <h3 class="card-title">Runchkin</h3>
+        <p class="card-desc">A roguelite you play by actually running. Daily seeded door board, real GPS distance gated by your gait, D-pad combat, and Run Away means run away.</p>
       </div>
     </article>
   </div>
@@ -990,6 +1081,39 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <a class="card-link" href="https://studioanrk.com/work/minibeats/" target="_blank" rel="noopener">Case study ↗</a>
       </div>
     </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/samsung-bibi.jpg" alt="Samsung × BiBi" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2020–2021 · The Mill</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Samsung × BiBi</h3>
+        <p class="card-desc">Real-time AR fashion for K-pop star BiBi in Samsung Galaxy's campaign. Six designers' pieces brought to life with body tracking for Fun Mode on Galaxy A devices.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/florence.jpg" alt="Florence by Mills" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2021 · Florence by Mills</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Florence by Mills</h3>
+        <p class="card-desc">Virtual makeup try-on for Millie Bobby Brown's range: realistic, high-quality products, and it tells you the exact shades you used. Made in Lens Studio.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/fakeup.jpg" alt="Fake Up" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2021–2022 · Snap Originals</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Fake Up</h3>
+        <p class="card-desc">One Snapchat filter per episode of Fake Up, the Snap Original about the world's best face and body paint artists.</p>
+      </div>
+    </article>
     <a class="card reveal" href="https://studioanrk.com/work/breakwater/" target="_blank" rel="noopener">
       <div class="card-media is-link">
         <div class="card-badge">Snap Original</div>
@@ -1013,6 +1137,61 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <h3 class="card-title">Bosch AR</h3>
         <p class="card-desc">Award-winning AR art app that lets Hieronymus Bosch's characters out of the canvas and into your room. An R&amp;D project with Roll Studio on how museums can bring collections into the world.</p>
         <a class="card-link" href="https://studioanrk.com/work/bosch/" target="_blank" rel="noopener">Case study ↗</a>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/lollapalooza.jpg" alt="Lollapalooza Paris" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2022 · C3</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Lollapalooza Paris</h3>
+        <p class="card-desc">A series of festival Lenses turning Lollapalooza's artwork into playful 3D space. Made in Lens Studio.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/wireless.jpg" alt="Wireless Festival" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2022 · Verizon</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Wireless Festival</h3>
+        <p class="card-desc">A unique Lens for every location at Wireless 2022.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/mercedes.jpg" alt="Mercedes × Virgil Abloh" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2020 · Visualise, Builders Club</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Mercedes × Virgil Abloh</h3>
+        <p class="card-desc">Virgil Abloh's redesigned Mercedes as an Instagram filter, so you can see the artwork at real-life scale wherever you are.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/airjordan.jpg" alt="Air Jordan 10" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2021 · Poplar AR</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Air Jordan 10</h3>
+        <p class="card-desc">Try-on for the Air Jordan 10 on Snap. Rotate your phone to spin the shoes in selfie mode, or wear them through the world camera.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media is-still">
+        <img src="media/axed.jpg" alt="Axed Global" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2020–2022 · Axed Global</span><span class="tag">Interactive</span></div>
+        <h3 class="card-title">Axed Global</h3>
+        <p class="card-desc">Projected smart lanes for axe throwing: hardware setup on the existing target boards plus an app of throwing-inspired games.</p>
       </div>
     </article>
   </div>
@@ -1088,7 +1267,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       </li>
       <li>
         <span class="recognition-year">2024</span>
-        <span class="recognition-title"><em>1st place</em>, Casual &amp; Social Gaming <span class="detail">Blobble</span></span>
+        <span class="recognition-title"><em>1st place</em>, Casual &amp; Social Gaming <span class="detail">Iyo</span></span>
         <span class="recognition-venue">Meta Presence Platform Hackathon</span>
       </li>
       <li>
@@ -1221,7 +1400,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       </li>
       <li>
         <span class="recognition-year">2024</span>
-        <span class="recognition-title"><em>第一名</em>，休闲社交游戏类 <span class="detail">Blobble</span></span>
+        <span class="recognition-title"><em>第一名</em>，休闲社交游戏类 <span class="detail">Iyo</span></span>
         <span class="recognition-venue">Meta Presence Platform 黑客松</span>
       </li>
       <li>
