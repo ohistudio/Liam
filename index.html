@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liam Mason — Games and products for wearables</title>
-<meta name="description" content="Liam Mason — Creative Technologist & PhD. Co-founder of ohi Studio. Games and products for wearables. XR Builder of the Year, AWE 2025.">
+<title>Liam Mason: Games and products for wearables</title>
+<meta name="description" content="Liam Mason, Creative Technologist and PhD. Co-founder of ohi Studio. Games and products for wearables, built with AI. XR Builder of the Year, AWE 2025.">
 
 <!--
   SETUP
@@ -65,17 +65,6 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 720px) {
   .container { padding: 0 1.5rem; }
 }
-
-/* ── soft-body bg ──────────────────────────────────── */
-.blob-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.82;
-}
-.blob-bg svg { width: 100%; height: 100%; }
-.blob-bg g.blob { will-change: transform; }
 
 /* ── header ────────────────────────────────────────── */
 header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
@@ -270,6 +259,50 @@ header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
 .card-desc { color: var(--fg-muted); font-size: 0.95rem; max-width: 42ch; }
 
 .more .card-media { aspect-ratio: 4 / 3; border-radius: var(--radius-sm); }
+
+/* image cards (link out instead of lightbox) */
+.card-media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  position: relative; z-index: 1;
+  transition: transform 0.7s cubic-bezier(.2,.6,.2,1);
+}
+.card:hover .card-media img { transform: scale(1.04); }
+.card-media.is-link::after { content: "Open ↗"; }
+.card-link {
+  display: inline-block;
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--accent-teal);
+  border-bottom: 1px solid rgba(45, 139, 142, 0.35);
+  padding-bottom: 1px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.card-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── subsections ───────────────────────────────────── */
+.subsection-head {
+  padding: 3rem 0 0.75rem;
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.subsection-head h3 {
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.subsection-head h3 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent);
+}
+.subsection-head .count { font-size: 0.82rem; color: var(--fg-muted); }
+.subsection-note {
+  padding: 0 0 1.75rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--fg-muted);
+  max-width: 62ch;
+}
+.subsection-note span { color: var(--accent-teal); }
 .more .card-title { font-size: 1.15rem; }
 .more .card-desc { font-size: 0.88rem; }
 
@@ -307,6 +340,14 @@ header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
 .in-field {
   padding: 4rem 0;
 }
+.in-field .field-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 720px) {
+  .in-field .field-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
 .in-field .field-media {
   position: relative;
   border-radius: 24px;
@@ -314,6 +355,13 @@ header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
   aspect-ratio: 16/9;
   background: rgba(255, 247, 241, 0.5);
   box-shadow: var(--shadow-md);
+}
+.in-field figcaption {
+  margin-top: 0.7rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--fg-muted);
 }
 .in-field .field-media img {
   width: 100%;
@@ -447,6 +495,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 /* ── reduced motion ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .hero-title em, .hero-currently::before, .about-portrait { animation: none; }
+  .card-media img, .card-media video { transition: none; }
 }
 
 /* ── lightbox ──────────────────────────────────────── */
@@ -553,58 +602,6 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
 <body>
 
-<!-- ── interactive blob bg ─────────────────────────── -->
-<div class="blob-bg" aria-hidden="true">
-  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <filter id="goo" x="-20%" y="-20%" width="140%" height="140%">
-        <!-- Matte: just blur + alpha-harden for the goo merge. No specular highlight. -->
-        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
-        <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" />
-      </filter>
-
-      <!-- True light pastels — soft highlights, gentle mid-tones, light pastel shadows -->
-      <radialGradient id="g1" cx="30%" cy="28%" r="80%">
-        <!-- pastel sky blue -->
-        <stop offset="0%"  stop-color="#f5f8ff"/>
-        <stop offset="45%" stop-color="#c0d8e8"/>
-        <stop offset="100%" stop-color="#88a8c0"/>
-      </radialGradient>
-      <radialGradient id="g2" cx="30%" cy="28%" r="80%">
-        <!-- pastel mint -->
-        <stop offset="0%"  stop-color="#f5fff5"/>
-        <stop offset="45%" stop-color="#c0dcc0"/>
-        <stop offset="100%" stop-color="#88b088"/>
-      </radialGradient>
-      <radialGradient id="g3" cx="30%" cy="28%" r="80%">
-        <!-- pastel pink — feature blob -->
-        <stop offset="0%"  stop-color="#fff5fa"/>
-        <stop offset="45%" stop-color="#f0c0d0"/>
-        <stop offset="100%" stop-color="#c890a8"/>
-      </radialGradient>
-      <radialGradient id="g4" cx="30%" cy="28%" r="80%">
-        <!-- pastel lilac -->
-        <stop offset="0%"  stop-color="#faf5ff"/>
-        <stop offset="45%" stop-color="#d8c5e8"/>
-        <stop offset="100%" stop-color="#a890c0"/>
-      </radialGradient>
-      <radialGradient id="g5" cx="30%" cy="28%" r="80%">
-        <!-- pastel butter yellow -->
-        <stop offset="0%"  stop-color="#fffce8"/>
-        <stop offset="45%" stop-color="#f8e0a8"/>
-        <stop offset="100%" stop-color="#c8a878"/>
-      </radialGradient>
-    </defs>
-    <g filter="url(#goo)">
-      <g class="blob" id="blob1"><circle cx="220" cy="200" r="170" fill="url(#g1)"/></g>
-      <g class="blob" id="blob2"><circle cx="920" cy="320" r="150" fill="url(#g2)"/></g>
-      <g class="blob" id="blob3"><circle cx="500" cy="680" r="190" fill="url(#g3)"/></g>
-      <g class="blob" id="blob4"><circle cx="1050" cy="640" r="130" fill="url(#g4)"/></g>
-      <g class="blob" id="blob5"><circle cx="120" cy="540" r="120" fill="url(#g5)"/></g>
-    </g>
-  </svg>
-</div>
-
 <!-- ── header ──────────────────────────────────────── -->
 <header>
   <div class="container header-inner">
@@ -620,10 +617,10 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <em>Games</em> and products for wearables.
   </h1>
   <p class="hero-lede" data-i18n="hero-lede">
-    Hi, I'm Liam — co-founder of ohi Studio. I make playful experiences with upcoming tech: smart glasses, AR, VR, computer vision, machine learning. <strong>XR Builder of the Year</strong> at AWE 2025.
+    Hi, I'm Liam, co-founder of ohi Studio. I make playful experiences with upcoming tech: smart glasses, AR, VR, computer vision and AI. <strong>XR Builder of the Year</strong> at AWE 2025.
   </p>
   <div class="hero-currently" data-i18n="hero-currently">
-    Working on unannounced projects for upcoming XR releases · At AWE 2026 — come say hi.
+    Working on unannounced projects for upcoming XR releases · Building with AI in the loop, shipping weekly.
   </div>
 
   <div class="reel">
@@ -633,14 +630,14 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   </div>
 </section>
 
-<!-- ── FEATURED PUBLIC WORK ───────────────────────── -->
+<!-- ── FEATURED ───────────────────────────────────── -->
 <div class="container">
   <div class="section-head">
-    <h2 data-i18n="featured-h">Featured public work</h2>
-    <span class="count" data-i18n="featured-c">Selected projects</span>
+    <h2 data-i18n="featured-h">Featured</h2>
+    <span class="count" data-i18n="featured-c">Start here</span>
   </div>
   <p class="section-note" data-i18n="featured-note">
-    <span>+</span> a few more under wraps — ask me about them in person.
+    <span>+</span> a few more under wraps. Ask me about them in person.
   </p>
 
   <div class="grid featured">
@@ -655,38 +652,36 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       <div class="card-body">
         <div class="card-meta"><span>2025–</span><span class="tag">AR</span></div>
         <h3 class="card-title">Pool Assist</h3>
-        <p class="card-desc">[Real-time shot trajectory overlay for pool players — replace.]</p>
+        <p class="card-desc">[Real-time shot trajectory overlay for pool players, replace.]</p>
       </div>
     </article>
-
     <article class="card reveal">
       <div class="card-media">
-        <div class="card-badge teal">XRCC Finalist 2026</div>
-        <video muted loop playsinline preload="none" poster="media/darts-poster.jpg" data-full="media/bullsai.mp4">
-          <source data-src="media/bullsai-preview.mp4" type="video/mp4">
+        <div class="card-badge">XRCC 2026 · 2× 1st place</div>
+        <video muted loop playsinline preload="none" poster="media/darts-poster.jpg" data-full="media/dartsmate.mp4">
+          <source data-src="media/dartsmate-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
-        <h3 class="card-title">BullsAi</h3>
-        <p class="card-desc">[Live scoring and target tracking for casual darts — replace.]</p>
+        <div class="card-meta"><span>2026</span><span class="tag">AR · AI</span></div>
+        <h3 class="card-title">DartsMate</h3>
+        <p class="card-desc">Real board, real darts. A phone camera scores every throw and your glasses show targets, games and coaching. Started life as BullsAi.</p>
       </div>
     </article>
 
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge">Meta Presence Winner 2024</div>
-        <video muted loop playsinline preload="none" poster="media/iyo-vr-poster.jpg" data-full="media/iyo-vr.mp4">
-          <source data-src="media/iyo-vr-preview.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/blobble-poster.jpg" data-full="media/blobble.mp4">
+          <source data-src="media/blobble-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2024</span><span class="tag teal">VR</span></div>
-        <h3 class="card-title">Iyo</h3>
-        <p class="card-desc">[Short pitch for the Iyo VR game — replace.]</p>
+        <div class="card-meta"><span>2024–</span><span class="tag">MR · AR</span></div>
+        <h3 class="card-title">Blobble</h3>
+        <p class="card-desc">Puzzle Bobble meets billiards in your actual room. Won the Casual &amp; Social Gaming category of Meta's 2024 Presence Platform Hackathon on Quest, then came to Specs.</p>
       </div>
     </article>
-
 
     <article class="card reveal">
       <div class="card-media">
@@ -698,9 +693,47 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       <div class="card-body">
         <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
         <h3 class="card-title">Iyo Roll</h3>
-        <p class="card-desc">[Physics-based AR rolling puzzle — replace.]</p>
+        <p class="card-desc">[Physics-based AR rolling puzzle, replace.]</p>
       </div>
     </article>
+    <a class="card reveal" href="https://ohi.studio/lisso/" target="_blank" rel="noopener">
+      <div class="card-media is-link">
+        <div class="card-badge">ohi Studio product</div>
+        <img src="media/lisso.jpg" alt="Lisso, AI language learning game for smart glasses" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AI · AR</span></div>
+        <h3 class="card-title">Lisso</h3>
+        <p class="card-desc">AI language-learning game for smart glasses. Objects around you glow. Say the word in your target language to capture them, with on-device speech recognition and pronunciation scoring.</p>
+        <span class="card-link">ohi.studio/lisso ↗</span>
+      </div>
+    </a>
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" poster="media/iyo-vr-poster.jpg" data-full="media/iyo-vr.mp4">
+          <source data-src="media/iyo-vr-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2024</span><span class="tag teal">VR</span></div>
+        <h3 class="card-title">Iyo</h3>
+        <p class="card-desc">[Short pitch for the Iyo VR game, replace.]</p>
+      </div>
+    </article>
+  </div>
+</div>
+
+<!-- ── SPECS ──────────────────────────────────────── -->
+<div class="container">
+  <div class="section-head">
+    <h2 data-i18n="specs-h">Specs Lenses</h2>
+    <span class="count" data-i18n="specs-c">Most of 2025 and 2026</span>
+  </div>
+  <p class="section-note" data-i18n="specs-note">
+    Snap Spectacles is where most of my time goes: games, tools and pet projects for a display you wear. Several of these won <span>Spectacles Community Challenges</span> and turned into contract work.
+  </p>
+
+  <div class="grid more">
 
     <article class="card reveal">
       <div class="card-media">
@@ -712,10 +745,9 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       <div class="card-body">
         <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
         <h3 class="card-title">Whereabouts</h3>
-        <p class="card-desc">[Location-anchored AR storytelling — replace.]</p>
+        <p class="card-desc">[Location-anchored AR storytelling, replace.]</p>
       </div>
     </article>
-
     <article class="card reveal">
       <div class="card-media">
         <div class="card-badge teal">Spectacles Winner 2026</div>
@@ -726,63 +758,33 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       <div class="card-body">
         <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
         <h3 class="card-title">Asym</h3>
-        <p class="card-desc">[Asymmetric multiplayer in shared physical space — replace.]</p>
+        <p class="card-desc">[Asymmetric multiplayer in shared physical space, replace.]</p>
       </div>
     </article>
-
-  </div>
-</div>
-
-<!-- ── MORE WORK ──────────────────────────────────── -->
-<div class="container">
-  <div class="section-head">
-    <h2 data-i18n="more-h">More work</h2>
-    <span class="count" data-i18n="more-c">Additional projects</span>
-  </div>
-
-  <div class="grid more">
-
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/specdeck-poster.jpg" data-full="media/specdeck.mp4">
-          <source data-src="media/specdeck-preview.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" poster="media/fursight-poster.jpg" data-full="media/fursight.mp4">
+          <source data-src="media/fursight-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2024</span><span class="tag">AR</span></div>
-        <h3 class="card-title">SpecDeck</h3>
-        <p class="card-desc">[One-line description.]</p>
+        <div class="card-meta"><span>2026</span><span class="tag">AR · ML</span></div>
+        <h3 class="card-title">FurSight for Specs</h3>
+        <p class="card-desc">The Specs port of FurSight, rebuilt as a pet-care Lens. An on-device model tracks your rabbit, and care notes and health checks float next to the hutch where you actually need them.</p>
       </div>
     </article>
-
     <article class="card reveal">
       <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/blobble-poster.jpg" data-full="media/blobble.mp4">
-          <source data-src="media/blobble-preview.mp4" type="video/mp4">
+        <video muted loop playsinline preload="none" data-full="media/wibble.mp4">
+          <source data-src="media/wibble-preview.mp4" type="video/mp4">
         </video>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>2024</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Blobble</h3>
-        <p class="card-desc">[One-line description.]</p>
+        <div class="card-meta"><span>2026</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Wibble</h3>
+        <p class="card-desc">Jelly blobs you pinch, throw and squash together. A mixed-reality colour puzzle: merge primaries until you hit the target colour. Also runs as shared-space multiplayer.</p>
       </div>
     </article>
-
-    <!-- FLOW — re-enable when media/flow.mp4 + media/flow-poster.jpg are added
-    <article class="card reveal">
-      <div class="card-media">
-        <video muted loop playsinline preload="none" poster="media/flow-poster.jpg" data-full="media/flow.mp4">
-          <source data-src="media/flow-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2025</span><span class="tag">AR</span></div>
-        <h3 class="card-title">Flow</h3>
-        <p class="card-desc">[One-line description.]</p>
-      </div>
-    </article>
-    -->
-
 
     <article class="card reveal">
       <div class="card-media">
@@ -797,7 +799,18 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <p class="card-desc">[One-line description.]</p>
       </div>
     </article>
-
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" poster="media/specdeck-poster.jpg" data-full="media/specdeck.mp4">
+          <source data-src="media/specdeck-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2024</span><span class="tag">AR</span></div>
+        <h3 class="card-title">SpecDeck</h3>
+        <p class="card-desc">[One-line description.]</p>
+      </div>
+    </article>
     <article class="card reveal">
       <div class="card-media">
         <video muted loop playsinline preload="none" poster="media/dance-poster.jpg" data-full="media/griddash.mp4">
@@ -810,7 +823,6 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <p class="card-desc">[One-line description.]</p>
       </div>
     </article>
-
     <article class="card reveal">
       <div class="card-media">
         <video muted loop playsinline preload="none" poster="media/fishing-poster.jpg" data-full="media/tabletoptides.mp4">
@@ -823,7 +835,173 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <p class="card-desc">[One-line description.]</p>
       </div>
     </article>
+  </div>
+</div>
 
+<!-- ── RAPID PROTOTYPES ───────────────────────────── -->
+<div class="container">
+  <div class="section-head">
+    <h2 data-i18n="proto-h">Rapid prototypes</h2>
+    <span class="count" data-i18n="proto-c">Small, fast, AI-assisted</span>
+  </div>
+  <p class="section-note" data-i18n="proto-note">
+    <span>+</span> the quick stuff: ideas that go from sketch to something on your face in days, with an AI agent doing a lot of the typing.
+  </p>
+
+  <div class="subsection-head">
+    <h3 data-i18n="clad-h"><em>CLAD</em> · Specs Lenses built with an AI agent</h3>
+    <span class="count" data-i18n="clad-c">Lens Studio, agent-driven</span>
+  </div>
+  <p class="subsection-note" data-i18n="clad-note">
+    Specs Lenses built end to end with Snap's CLAD workflow: an AI agent inside Lens Studio doing the scene setup, scripting and testing while I steer the design.
+  </p>
+
+  <div class="grid more">
+
+    <article class="card reveal">
+      <div class="card-media">
+        <div class="card-badge teal">CLAD Challenge</div>
+        <video muted loop playsinline preload="none" data-full="media/fengshui.mp4">
+          <source data-src="media/fengshui-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AI · AR</span></div>
+        <h3 class="card-title">Fengshui</h3>
+        <p class="card-desc">Point your Specs at a room and get a Chi score. Gemini reads the space, suggests what to move, and renders the improved room in place. Built end to end with the CLAD agent workflow.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- VolleyMate: add a card here once there's a clip (media/volleymate.mp4 + volleymate-preview.mp4) -->
+
+  <div class="subsection-head">
+    <h3 data-i18n="ppp-h"><em>Ping Pong</em> Prototyping · Meta Ray-Ban Display</h3>
+    <span class="count" data-i18n="ppp-c">🏓 Turn-based builds</span>
+  </div>
+  <p class="subsection-note" data-i18n="ppp-note">
+    A friend and I both got Meta Ray-Ban Displays, so we started Ping Pong Prototyping: one of us builds something for the glasses, then it's the other's turn. Each round is a few days, built with AI from first line to store build.
+  </p>
+
+  <div class="grid more">
+
+    <article class="card reveal">
+      <div class="card-media">
+        <div class="card-badge">PPP · Round 1</div>
+        <video muted loop playsinline preload="none" data-full="media/fursight-mrbd.mp4">
+          <source data-src="media/fursight-mrbd-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AI · Glasses</span></div>
+        <h3 class="card-title">FurSight</h3>
+        <p class="card-desc">The PPP opener. Look at any food, ask if it's safe for your pet, and the glasses answer with a verdict from Gemini. Started because I couldn't remember if grapes kill dogs.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <div class="card-badge teal">Lenslist Winner</div>
+        <video muted loop playsinline preload="none" poster="media/whenabouts-poster.jpg" data-full="media/whenabouts.mp4">
+          <source data-src="media/whenabouts-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AI · Glasses</span></div>
+        <h3 class="card-title">Whenabouts</h3>
+        <p class="card-desc">Point your glasses at a fossil, rock or creature and find out when it lived. AI guides plus live geology and wildlife data, on a 600-pixel display.</p>
+      </div>
+    </article>
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" poster="media/airmeter-poster.jpg" data-full="media/airmeter.mp4">
+          <source data-src="media/airmeter-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">Glasses</span></div>
+        <h3 class="card-title">AirMeter</h3>
+        <p class="card-desc">Live air quality, pollen and UV for wherever you're standing, drawn as a drifting particle field on the Meta Ray-Ban Display.</p>
+      </div>
+    </article>
+  </div>
+</div>
+
+<!-- ── BRAND WORK ─────────────────────────────────── -->
+<div class="container">
+  <div class="section-head">
+    <h2 data-i18n="anrk-h">Brand and music AR</h2>
+    <span class="count" data-i18n="anrk-c">Studio ANRK and freelance, 2020 on</span>
+  </div>
+  <p class="section-note" data-i18n="anrk-note">
+    Before ohi I was Creative Technologist at <span>Studio ANRK</span> in London and freelanced alongside: spatial AR with computer vision and machine learning for Ralph Lauren, Samsung, Nike, MLB, Snap Originals and more. A few favourites.
+  </p>
+
+  <div class="grid more">
+
+    <a class="card reveal" href="https://studioanrk.com/work/rl/" target="_blank" rel="noopener">
+      <div class="card-media is-link">
+        <img src="media/ralph-lauren.jpg" alt="Ralph Lauren AR try-on" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2020–2023 · Ralph Lauren</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Ralph Lauren</h3>
+        <p class="card-desc">Three years of try-on and campaign Lenses on Snapchat and Instagram: sunglasses, handbags and accessories, from 3D product modelling through to campaign films.</p>
+        <span class="card-link">Case study ↗</span>
+      </div>
+    </a>
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/scanband.mp4">
+          <source data-src="media/scanband.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2021 · Artiphon</span><span class="tag">AR · ML</span></div>
+        <h3 class="card-title">Scan Band</h3>
+        <p class="card-desc">Point your phone at anything and it becomes an instrument. Machine learning recognises over 500 object types and gives each one a musical loop.</p>
+        <a class="card-link" href="https://studioanrk.com/work/scanband/" target="_blank" rel="noopener">Case study ↗</a>
+      </div>
+    </article>
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/minibeats.mp4">
+          <source data-src="media/minibeats.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2022–2023 · Artiphon</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Minibeats</h3>
+        <p class="card-desc">Native iOS and Android app on Snap's Camera Kit: your body as the instrument. Wave to paint sparkles across the sky, dance and the beat follows. No musical background needed.</p>
+        <a class="card-link" href="https://studioanrk.com/work/minibeats/" target="_blank" rel="noopener">Case study ↗</a>
+      </div>
+    </article>
+    <a class="card reveal" href="https://studioanrk.com/work/breakwater/" target="_blank" rel="noopener">
+      <div class="card-media is-link">
+        <div class="card-badge">Snap Original</div>
+        <img src="media/breakwater.jpg" alt="Breakwater, Snap Original AR series" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2022 · Snap Originals</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Breakwater</h3>
+        <p class="card-desc">One AR experience per episode of a Snap Original drama set in a world of climate refugees, each extending that episode's story and characters.</p>
+        <span class="card-link">Case study ↗</span>
+      </div>
+    </a>
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/bosch.mp4">
+          <source data-src="media/bosch.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2021–2022 · Roll Studio</span><span class="tag">AR</span></div>
+        <h3 class="card-title">Bosch AR</h3>
+        <p class="card-desc">Award-winning AR art app that lets Hieronymus Bosch's characters out of the canvas and into your room. An R&amp;D project with Roll Studio on how museums can bring collections into the world.</p>
+        <a class="card-link" href="https://studioanrk.com/work/bosch/" target="_blank" rel="noopener">Case study ↗</a>
+      </div>
+    </article>
   </div>
 </div>
 
@@ -837,8 +1015,11 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       <div class="about-eyebrow" data-i18n="about-h">About</div>
     </div>
     <div class="about-body" data-i18n="about-body">
-      <p>I'm Liam — I get to play with <em>upcoming tech</em> and turn it into things that feel good in your hands and on your face. Spatial computing, smart glasses, computer vision, machine learning — anything that gives me a new toy to figure out. I co-founded ohi Studio, and I also consult with teams building in this space.</p>
-      <p>Before that I did a PhD in Computer Science at the University of Lincoln, and taught game design, HCI, and games programming as an associate lecturer. My doctoral research was on playful technology for wheelchair users — work that ended up at <em>CHI</em>, the top human-computer interaction conference.</p>
+      <p>I'm Liam. I get to play with <em>upcoming tech</em> and turn it into things that feel good in your hands and on your face. Spatial computing, smart glasses, computer vision, machine learning: anything that gives me a new toy to figure out.</p>
+      <p>I co-founded <em>ohi Studio</em>. Ohi builds products for smart glasses and wearables. AI will live on your smart glasses and look at the world with you. We're at the moment where the hardware finally matches the ambition, and the software to make that genuinely useful and genuinely fun is still being written. We're writing it. Ohi combines playful interaction design with agentic AI to build apps, games and tools for wearables, and takes them from concept to deployment in-house. No handoffs, no agency layer. That keeps us fast and lets us move where the hardware moves.</p>
+      <p>Competition wins turned into contracts: prototype and store builds for Meta, Snap and Google, ports to new hardware, and behind-the-scenes work with partners who can't be named yet, across fitness, AI skills training, games and utility. I also consult with teams building in this space.</p>
+      <p>Most of what I ship has <em>AI in the loop</em>. Agentic coding to get from idea to working prototype in days, Gemini and on-device models for speech and vision, generative tools for art and sound. It lets a tiny studio move like a big one, and it means my time goes on the part that matters: whether the thing is actually fun.</p>
+      <p>Before that I did a PhD in Computer Science at the University of Lincoln, and taught game design, HCI, and games programming as an associate lecturer. My doctoral research was on playful technology for wheelchair users: interviews and surveys turned into design guidelines, then two adaptive exergames built around what wheelchair users actually want from play. That work ended up at <em>CHI</em>, the top human-computer interaction conference, and picked up a Best Paper award.</p>
       <p>I like prototypes you can actually hold, problems that don't have one right answer, and the moment when a piece of tech crosses over from "neat" to "I want one." Always poking at what's next.</p>
     </div>
   </div>
@@ -846,8 +1027,19 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 
 <!-- ── in the field ───────────────────────────────── -->
 <section class="in-field container">
-  <div class="field-media">
-    <img src="media/in-field-spectacles.jpg" alt="Liam testing smart glasses on location" loading="lazy">
+  <div class="field-grid">
+    <figure>
+      <div class="field-media">
+        <img src="media/in-field-spectacles.jpg" alt="Liam testing smart glasses on location" loading="lazy">
+      </div>
+      <figcaption data-i18n="field-cap-1">Field testing on Spectacles.</figcaption>
+    </figure>
+    <figure>
+      <div class="field-media">
+        <img src="media/awe-xr-master-builder.jpg" alt="AWE 2025 main stage naming Liam Mason XR Master Builder of the year" loading="lazy">
+      </div>
+      <figcaption data-i18n="field-cap-2">AWE 2025 main stage. XR Master Builder of the year.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -858,13 +1050,18 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     <ul class="recognition-list" style="margin: 0;" data-i18n="recognition-list">
       <li>
         <span class="recognition-year">2026</span>
-        <span class="recognition-title">Multiple winner <span class="detail">— Iyo Roll, Whereabouts, Asym, Bittown</span></span>
+        <span class="recognition-title">Multiple winner <span class="detail">Iyo Roll, Whereabouts, Asym, Bittown</span></span>
         <span class="recognition-venue">Spectacles Community Challenges</span>
       </li>
       <li>
         <span class="recognition-year">2026</span>
-        <span class="recognition-title">Finalist <span class="detail">— BullsAi</span></span>
+        <span class="recognition-title"><em>1st place</em>, twice <span class="detail">DartsMate</span></span>
         <span class="recognition-venue">XRCC 2026</span>
+      </li>
+      <li>
+        <span class="recognition-year">2026</span>
+        <span class="recognition-title">Winner <span class="detail">Whenabouts</span></span>
+        <span class="recognition-venue">Lenslist</span>
       </li>
       <li>
         <span class="recognition-year">2025</span>
@@ -873,18 +1070,47 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       </li>
       <li>
         <span class="recognition-year">2025–</span>
-        <span class="recognition-title">Main stage feature <span class="detail">— Pool Assist</span></span>
+        <span class="recognition-title">Main stage feature <span class="detail">Pool Assist</span></span>
         <span class="recognition-venue">AWE</span>
       </li>
       <li>
         <span class="recognition-year">2024</span>
-        <span class="recognition-title">Winner <span class="detail">— Iyo</span></span>
+        <span class="recognition-title"><em>1st place</em>, Casual &amp; Social Gaming <span class="detail">Blobble</span></span>
         <span class="recognition-venue">Meta Presence Platform Hackathon</span>
       </li>
       <li>
         <span class="recognition-year">2021</span>
         <span class="recognition-title">Best Paper Award</span>
         <span class="recognition-venue">CHI 2021</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── papers ─────────────────────────────────────── -->
+<section class="recognition container">
+  <div class="about-grid">
+    <div class="about-eyebrow" data-i18n="papers-h">Selected papers</div>
+    <ul class="recognition-list" style="margin: 0;">
+      <li>
+        <span class="recognition-year">2022</span>
+        <span class="recognition-title">Including the Experiences of Physically Disabled Players in Mainstream Guidelines for Movement-Based Games <span class="detail">Best Paper</span></span>
+        <span class="recognition-venue">CHI 2022</span>
+      </li>
+      <li>
+        <span class="recognition-year">2020</span>
+        <span class="recognition-title">Virtual Reality Games for People Using Wheelchairs</span>
+        <span class="recognition-venue">CHI 2020</span>
+      </li>
+      <li>
+        <span class="recognition-year">2020</span>
+        <span class="recognition-title">Dash Lane: An Adaptive Exergame for People Using Manual Wheelchairs</span>
+        <span class="recognition-venue">DIS 2020</span>
+      </li>
+      <li>
+        <span class="recognition-year">2019</span>
+        <span class="recognition-title">Design Goals for Playful Technology to Support Physical Activity Among Wheelchair Users</span>
+        <span class="recognition-venue">CHI 2019</span>
       </li>
     </ul>
   </div>
@@ -922,30 +1148,53 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   const zh = {
     'brand-sub': '创意技术专家 · 博士 · ohi 工作室联合创始人',
     'hero-title': '为智能眼镜与可穿戴设备打造<em>好玩</em>的体验。',
-    'hero-lede': '你好，我是 Liam —— ohi 工作室联合创始人。我用前沿科技做好玩的体验：智能眼镜、AR、VR、计算机视觉、机器学习。<strong>2025 AWE 年度 XR 开发者奖</strong>得主。',
-    'hero-currently': '正在为多个即将发布的 XR 平台开发未公开项目 · 本周在 AWE 2026 —— 欢迎来打招呼。',
-    'featured-h': '已公开作品',
-    'featured-c': '代表项目',
+    'hero-lede': '你好，我是 Liam —— ohi 工作室联合创始人。我用前沿科技做好玩的体验：智能眼镜、AR、VR、计算机视觉与 AI。<strong>2025 AWE 年度 XR 开发者奖</strong>得主。',
+    'hero-currently': '正在为多个即将发布的 XR 平台开发未公开项目 · 全程 AI 协作，每周上线新东西。',
+    'featured-h': '精选',
+    'featured-c': '从这里开始',
     'featured-note': '<span>+</span> 还有一些保密中的项目 —— 当面聊聊吧。',
-    'more-h': '更多作品',
-    'more-c': '其他项目',
+    'specs-h': 'Specs 镜头',
+    'specs-c': '2025 与 2026 的主战场',
+    'specs-note': 'Snap Spectacles 是我花时间最多的地方：为一块戴在脸上的显示屏做游戏、工具和小玩意。其中多个作品赢得了 <span>Spectacles 社区挑战赛</span>，并转化为合同项目。',
+    'proto-h': '快速原型',
+    'proto-c': '小而快，AI 协作',
+    'proto-note': '<span>+</span> 快手活：从草图到戴在脸上只需几天，大部分代码由 AI 智能体敲出来。',
+    'clad-h': '<em>CLAD</em> · 用 AI 智能体构建的 Specs 镜头',
+    'clad-c': 'Lens Studio，智能体驱动',
+    'clad-note': '用 Snap 的 CLAD 工作流从头到尾构建的 Specs 镜头：AI 智能体在 Lens Studio 里搭场景、写脚本、做测试，我负责把控设计。',
+    'ppp-h': '<em>乒乓</em>原型法 · Meta Ray-Ban Display',
+    'ppp-c': '🏓 轮流开发',
+    'ppp-note': '我和一位朋友都入手了 Meta Ray-Ban Display，于是开始了"乒乓原型法"：一个人为眼镜做点东西，然后轮到另一个人。每一回合只花几天，从第一行代码到上架都有 AI 参与。',
+    'anrk-h': '品牌与音乐 AR',
+    'anrk-c': 'Studio ANRK 与自由职业，2020 年起',
+    'anrk-note': '创立 ohi 之前，我在伦敦 <span>Studio ANRK</span> 担任创意技术专家，同时接自由项目：用计算机视觉和机器学习为 Ralph Lauren、三星、Nike、MLB、Snap Originals 等做空间 AR。这里是几个心头好。',
     'about-h': '关于',
     'about-body': `
-      <p>我是 Liam —— 我喜欢摆弄<em>前沿科技</em>，把它们做成戴起来、用起来舒服的东西。空间计算、智能眼镜、计算机视觉、机器学习 —— 只要有新玩具，我就想搞明白。我是 ohi 工作室的联合创始人，同时也为这个领域的团队提供咨询服务。</p>
-      <p>在那之前，我在英国林肯大学完成了计算机科学博士学位，并以助理讲师身份教授游戏设计、人机交互（HCI）与游戏编程。博士研究聚焦于轮椅使用者的趣味化技术，相关成果发表于人机交互领域顶级会议 <em>CHI</em>。</p>
+      <p>我是 Liam —— 我喜欢摆弄<em>前沿科技</em>，把它们做成戴起来、用起来舒服的东西。空间计算、智能眼镜、计算机视觉、机器学习 —— 只要有新玩具，我就想搞明白。</p>
+      <p>我是 <em>ohi 工作室</em>的联合创始人。Ohi 为智能眼镜和可穿戴设备打造产品。AI 将住进你的眼镜，和你一起看世界。硬件终于追上了野心，而让它真正有用、真正好玩的软件还在被写出来。我们正在写。Ohi 把好玩的交互设计和智能体 AI 结合起来，为可穿戴设备做应用、游戏和工具，从概念到上线全部在内部完成。没有交接，没有代理层。这让我们够快，硬件往哪走我们就往哪走。</p>
+      <p>比赛获奖变成了合同：为 Meta、Snap 和 Google 做原型和上架版本，把作品移植到新硬件，以及和暂时不能透露的伙伴做幕后项目，涵盖健身、AI 技能训练、游戏和实用工具。我也为这个领域的团队提供咨询。</p>
+      <p>我做的东西大多有 <em>AI 参与</em>：用智能体编程几天内把想法做成可用原型，用 Gemini 和端侧模型做语音和视觉，用生成式工具做美术和音效。它让一个小工作室拥有大团队的速度，也让我把时间花在真正重要的事上：这东西到底好不好玩。</p>
+      <p>在那之前，我在英国林肯大学完成了计算机科学博士学位，并以助理讲师身份教授游戏设计、人机交互（HCI）与游戏编程。博士研究聚焦于轮椅使用者的趣味化技术：从访谈和问卷提炼设计准则，再据此打造两款自适应体感游戏。相关成果发表于人机交互领域顶级会议 <em>CHI</em>，并获最佳论文奖。</p>
       <p>我喜欢能真正上手的原型、没有标准答案的难题，以及一项技术从"挺酷"变成"我想要一个"的瞬间。始终在琢磨下一个可能。</p>
     `,
+    'field-cap-1': '在 Spectacles 上做实地测试。',
+    'field-cap-2': 'AWE 2025 主舞台：年度 XR 大师级开发者。',
     'recognition-h': '获奖与认可',
     'recognition-list': `
       <li>
         <span class="recognition-year">2026</span>
-        <span class="recognition-title">多项冠军 <span class="detail">— Iyo Roll、Whereabouts、Asym、Bittown</span></span>
+        <span class="recognition-title">多项冠军 <span class="detail">Iyo Roll、Whereabouts、Asym、Bittown</span></span>
         <span class="recognition-venue">Spectacles 社区挑战赛</span>
       </li>
       <li>
         <span class="recognition-year">2026</span>
-        <span class="recognition-title">入围 <span class="detail">— BullsAi</span></span>
+        <span class="recognition-title"><em>两项第一名</em> <span class="detail">DartsMate</span></span>
         <span class="recognition-venue">XRCC 2026</span>
+      </li>
+      <li>
+        <span class="recognition-year">2026</span>
+        <span class="recognition-title">冠军 <span class="detail">Whenabouts</span></span>
+        <span class="recognition-venue">Lenslist</span>
       </li>
       <li>
         <span class="recognition-year">2025</span>
@@ -954,12 +1203,12 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       </li>
       <li>
         <span class="recognition-year">2025–</span>
-        <span class="recognition-title">主舞台展示 <span class="detail">— Pool Assist</span></span>
+        <span class="recognition-title">主舞台展示 <span class="detail">Pool Assist</span></span>
         <span class="recognition-venue">AWE</span>
       </li>
       <li>
         <span class="recognition-year">2024</span>
-        <span class="recognition-title">冠军 <span class="detail">— Iyo</span></span>
+        <span class="recognition-title"><em>第一名</em>，休闲社交游戏类 <span class="detail">Blobble</span></span>
         <span class="recognition-venue">Meta Presence Platform 黑客松</span>
       </li>
       <li>
@@ -968,6 +1217,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <span class="recognition-venue">CHI 2021</span>
       </li>
     `,
+    'papers-h': '代表论文',
     'contact-eyebrow': '联系',
     'contact-h': '一起<em>做</em>点什么吧。'
   };
@@ -993,85 +1243,6 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   document.querySelector('.lang-toggle').addEventListener('click', () => {
     setLang(currentLang === 'en' ? 'zh' : 'en');
   });
-
-  // ─── interactive blob physics ─────────────────────────
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isMobile = window.matchMedia('(max-width: 720px)').matches;
-  const animateBlobs = !prefersReduced && !isMobile;
-
-  const blobs = [
-    { id: 'blob1', bx: 220,  by: 200, r: 170, fx: 0.7, fy: 0.5, ph: 0,   driftX: 110, driftY: 80 },
-    { id: 'blob2', bx: 920,  by: 320, r: 150, fx: 0.5, fy: 0.8, ph: 1.3, driftX: 130, driftY: 100 },
-    { id: 'blob3', bx: 500,  by: 680, r: 190, fx: 0.4, fy: 0.6, ph: 2.4, driftX: 150, driftY: 90 },
-    { id: 'blob4', bx: 1050, by: 640, r: 130, fx: 0.6, fy: 0.4, ph: 3.7, driftX: 100, driftY: 110 },
-    { id: 'blob5', bx: 120,  by: 540, r: 120, fx: 0.5, fy: 0.7, ph: 4.9, driftX: 90,  driftY: 100 }
-  ];
-  blobs.forEach(b => {
-    b.el = document.getElementById(b.id);
-    b.x = b.bx; b.y = b.by;
-    b.vx = 0; b.vy = 0;
-  });
-
-  let mouseSvgX = -1000, mouseSvgY = -1000;
-  const svg = document.querySelector('.blob-bg svg');
-
-  function screenToSvg(clientX, clientY) {
-    const rect = svg.getBoundingClientRect();
-    return {
-      x: ((clientX - rect.left) / rect.width) * 1200,
-      y: ((clientY - rect.top) / rect.height) * 800
-    };
-  }
-
-  window.addEventListener('mousemove', e => {
-    const p = screenToSvg(e.clientX, e.clientY);
-    mouseSvgX = p.x; mouseSvgY = p.y;
-  });
-  window.addEventListener('mouseleave', () => { mouseSvgX = -1000; mouseSvgY = -1000; });
-
-  // click anywhere to send out a ripple that kicks every blob
-  window.addEventListener('click', e => {
-    const p = screenToSvg(e.clientX, e.clientY);
-    blobs.forEach(b => {
-      const dx = b.x - p.x;
-      const dy = b.y - p.y;
-      const dist = Math.hypot(dx, dy) || 1;
-      const force = Math.min(40, 12000 / (dist + 30));
-      b.vx += (dx / dist) * force;
-      b.vy += (dy / dist) * force;
-    });
-  });
-
-  let t = 0;
-  function tick() {
-    t += 0.008;
-    blobs.forEach(b => {
-      // organic drifting target (sine wandering around base)
-      const tx = b.bx + Math.sin(t * b.fx + b.ph) * b.driftX;
-      const ty = b.by + Math.cos(t * b.fy + b.ph) * b.driftY;
-      // spring toward drifting target
-      b.vx += (tx - b.x) * 0.012;
-      b.vy += (ty - b.y) * 0.012;
-      // mouse repulsion
-      const dx = b.x - mouseSvgX;
-      const dy = b.y - mouseSvgY;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 280) {
-        const force = (280 - dist) * 0.04;
-        b.vx += (dx / dist) * force;
-        b.vy += (dy / dist) * force;
-      }
-      // damping
-      b.vx *= 0.88;
-      b.vy *= 0.88;
-      b.x += b.vx;
-      b.y += b.vy;
-      b.el.setAttribute('transform', `translate(${b.x - b.bx}, ${b.y - b.by})`);
-    });
-    if (animateBlobs) requestAnimationFrame(tick);
-  }
-  if (animateBlobs) tick();
-
 
   // ─── lazy-load card videos ──────────────────────────────
   function activateVideo(v) {

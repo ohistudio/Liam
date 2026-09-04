@@ -12,6 +12,15 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000 in Chrome or Safari.
 
+Each project video has a `-preview.mp4` (first 20s, loops in the card) and a full clip for the lightbox. Make them with:
+
+```bash
+ffmpeg -i in.mp4 -c:v libx264 -crf 28 -an -vf "scale='min(1280,iw)':-2" -movflags +faststart name.mp4
+ffmpeg -i in.mp4 -t 20 -c:v libx264 -crf 28 -an -vf "scale='min(1280,iw)':-2" -movflags +faststart name-preview.mp4
+```
+
+Sections: Featured, Specs Lenses, Rapid prototypes (CLAD subsection + Ping Pong Prototyping subsection), Brand and music AR, About, Wins, Papers. VolleyMate has a placeholder comment in the CLAD subsection until there's a clip.
+
 ## What goes where
 
 ```
@@ -25,7 +34,11 @@ ohi-website/
     ├── reel.mp4                ← (you add) — top-of-page sizzle reel (loops, muted, no audio needed)
     ├── reel-poster.jpg         ← (you add) — fallback poster image for reel.mp4
     ├── pool.mp4 + pool-poster.jpg          ← Pool Assist clip
-    ├── darts.mp4 + darts-poster.jpg        ← Darts Mate clip
+    ├── dartsmate.mp4 + dartsmate-preview.mp4  ← DartsMate clip
+    ├── whenabouts.mp4 / airmeter.mp4       ← Ping Pong Prototyping (Meta Ray-Ban Display)
+    ├── lisso.jpg / breakwater.jpg / ralph-lauren.jpg  ← image cards (link out)
+    ├── bosch.mp4 / scanband.mp4 / minibeats.mp4      ← Studio ANRK clips
+    ├── awe-xr-master-builder.jpg           ← AWE 2025 stage photo
     ├── iyo-vr.mp4 + iyo-vr-poster.jpg      ← Iyo (VR) clip
     ├── iyo-roll.mp4 + iyo-roll-poster.jpg  ← Iyo Roll clip
     ├── whereabouts.mp4 + whereabouts-poster.jpg
