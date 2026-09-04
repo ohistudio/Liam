@@ -64,6 +64,7 @@ a { color: inherit; text-decoration: none; }
 .container { max-width: 1240px; margin: 0 auto; padding: 0 1.75rem; }
 @media (max-width: 720px) {
   .container { padding: 0 1.5rem; }
+  .brand-sub { display: none; }
 }
 
 /* ── header ────────────────────────────────────────── */
@@ -280,6 +281,68 @@ header { padding: 1.75rem 0 1rem; position: relative; z-index: 10; }
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 .card-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── compact grids ─────────────────────────────────── */
+.grid.compact { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+@media (min-width: 720px) { .grid.compact { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1000px) { .grid.compact { grid-template-columns: repeat(4, 1fr); gap: 1.4rem; } }
+.compact .card-media { border-radius: var(--radius-sm); }
+.compact .card-body { padding: 0.9rem 0.15rem 0; }
+.compact .card-meta { font-size: 0.72rem; margin-bottom: 0.25rem; }
+.compact .card-title { font-size: 1.05rem; margin-bottom: 0.3rem; }
+.compact .card-desc {
+  font-size: 0.82rem; line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.compact .card-link { font-size: 0.74rem; margin-top: 0.4rem; }
+.compact .card-badge { font-size: 0.66rem; padding: 0.35rem 0.65rem; top: 10px; left: 10px; }
+.card.is-collapsed { display: none; }
+.show-more {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 0.25rem;
+  background: rgba(255, 247, 241, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(42, 34, 29, 0.14);
+  border-radius: 999px;
+  padding: 0.6rem 1.3rem;
+  font-family: inherit; font-size: 0.85rem; color: var(--fg);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.show-more:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.04); }
+
+/* ── section nav ───────────────────────────────────── */
+.section-nav {
+  position: sticky; top: 0; z-index: 20;
+  padding: 0.5rem 0;
+  pointer-events: none;
+}
+.section-nav-inner { display: flex; justify-content: center; }
+.section-nav-inner { pointer-events: none; }
+.section-nav a {
+  pointer-events: auto;
+  font-size: 0.8rem; color: var(--fg-muted);
+  padding: 0.45rem 0.85rem;
+  transition: color 0.2s ease, background 0.2s ease;
+  border-radius: 999px;
+}
+.section-nav a:hover, .section-nav a.active { color: var(--fg); background: rgba(255, 247, 241, 0.9); }
+.section-nav-inner::before { content: none; }
+.section-nav .pill {
+  pointer-events: auto;
+  display: inline-flex; gap: 0.1rem;
+  background: rgba(255, 247, 241, 0.62);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(42, 34, 29, 0.1);
+  border-radius: 999px; padding: 0.25rem;
+  box-shadow: 0 6px 24px rgba(42, 34, 29, 0.08);
+}
+@media (max-width: 720px) {
+  .section-nav .pill { overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+  .section-nav a { padding: 0.4rem 0.7rem; font-size: 0.76rem; white-space: nowrap; }
+}
+html { scroll-padding-top: 4rem; }
 
 /* ── subsections ───────────────────────────────────── */
 .subsection-head {
@@ -613,6 +676,20 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   </div>
 </header>
 
+<!-- ── section nav ─────────────────────────────────── -->
+<nav class="section-nav" aria-label="Sections">
+  <div class="container section-nav-inner">
+    <div class="pill">
+    <a href="#featured" data-i18n="nav-featured">Featured</a>
+    <a href="#specs" data-i18n="nav-specs">Specs</a>
+    <a href="#display" data-i18n="nav-display">Display</a>
+    <a href="#brand" data-i18n="nav-brand">Brands</a>
+    <a href="#about" data-i18n="nav-about">About</a>
+    <a href="#contact" data-i18n="nav-contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
 <!-- ── hero ────────────────────────────────────────── -->
 <section class="hero container">
   <h1 class="hero-title" data-i18n="hero-title">
@@ -633,7 +710,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 </section>
 
 <!-- ── FEATURED ───────────────────────────────────── -->
-<div class="container">
+<div class="container" id="featured">
   <div class="section-head">
     <h2 data-i18n="featured-h">Featured</h2>
     <span class="count" data-i18n="featured-c">Start here</span>
@@ -669,6 +746,19 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
         <div class="card-meta"><span>2026</span><span class="tag">AR · AI</span></div>
         <h3 class="card-title">DartsMate</h3>
         <p class="card-desc">Real board, real darts. A phone camera scores every throw and your glasses show targets, games and coaching. Started life as BullsAi.</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-media">
+        <video muted loop playsinline preload="none" data-full="media/overshoulder.mp4">
+          <source data-src="media/overshoulder-preview.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>2026</span><span class="tag">AI · AR</span></div>
+        <h3 class="card-title">OverShoulder</h3>
+        <p class="card-desc">Pros don't record tutorials, so OverShoulder watches one. An expert does the job wearing Specs, the Lens captures each step where it happened, and the next person sees the instructions floating on the actual valve, plant or engine.</p>
       </div>
     </article>
 
@@ -745,16 +835,16 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 </div>
 
 <!-- ── SPECS ──────────────────────────────────────── -->
-<div class="container">
+<div class="container" id="specs">
   <div class="section-head">
     <h2 data-i18n="specs-h">Specs Lenses</h2>
     <span class="count" data-i18n="specs-c">Most of 2025 and 2026</span>
   </div>
   <p class="section-note" data-i18n="specs-note">
-    Snap Spectacles is where most of my time goes: games, tools and pet projects for a display you wear. Several of these won <span>Spectacles Community Challenges</span> and turned into contract work.
+    Snap Spectacles is where most of my time goes: games, tools and pet projects for a display you wear. Several won <span>Spectacles Community Challenges</span> and turned into contract work. The CLAD set below was built with Snap's AI agent in Lens Studio.
   </p>
 
-  <div class="grid more">
+  <div class="grid more compact collapsible" data-show="8">
 
     <article class="card reveal">
       <div class="card-media">
@@ -795,30 +885,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
       </div>
     </article>
 
-    <article class="card reveal">
-      <div class="card-media">
-        <video muted loop playsinline preload="none" data-full="media/overshoulder.mp4">
-          <source data-src="media/overshoulder-preview.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>2026</span><span class="tag">AI · AR</span></div>
-        <h3 class="card-title">OverShoulder</h3>
-        <p class="card-desc">Pros don't record tutorials, so OverShoulder watches one. An expert does the job wearing Specs, the Lens captures each step where it happened, and the next person sees the instructions floating on the actual valve, plant or engine.</p>
-      </div>
-    </article>
   </div>
-</div>
-
-<!-- ── RAPID PROTOTYPES ───────────────────────────── -->
-<div class="container">
-  <div class="section-head">
-    <h2 data-i18n="proto-h">Rapid prototypes</h2>
-    <span class="count" data-i18n="proto-c">Small and fast</span>
-  </div>
-  <p class="section-note" data-i18n="proto-note">
-    <span>+</span> the quick stuff: ideas that go from sketch to something on your face in days.
-  </p>
 
   <div class="subsection-head">
     <h3 data-i18n="clad-h"><em>CLAD</em> · Specs Lenses built with an AI agent</h3>
@@ -828,7 +895,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     Specs Lenses built end to end with Snap's CLAD workflow: an AI agent inside Lens Studio doing the scene setup, scripting and testing while I steer the design.
   </p>
 
-  <div class="grid more">
+  <div class="grid more compact collapsible" data-show="8">
 
     <article class="card reveal">
       <div class="card-media">
@@ -927,6 +994,14 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   </div>
 
 
+</div>
+
+<!-- ── META RAY-BAN DISPLAY ───────────────────────── -->
+<div class="container" id="display">
+  <div class="section-head">
+    <h2 data-i18n="display-h">Meta Ray-Ban Display</h2>
+    <span class="count" data-i18n="display-c">Rapid prototypes, in days</span>
+  </div>
   <div class="subsection-head">
     <h3 data-i18n="ppp-h"><em>Ping Pong</em> Prototyping · Meta Ray-Ban Display</h3>
     <span class="count" data-i18n="ppp-c">🏓 Turn-based builds</span>
@@ -935,7 +1010,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     A friend and I both got Meta Ray-Ban Displays, so we started Ping Pong Prototyping: one of us builds something for the glasses, then it's the other's turn. Each round is a few days from first line to store build.
   </p>
 
-  <div class="grid more">
+  <div class="grid more compact collapsible" data-show="8">
 
     <article class="card reveal">
       <div class="card-media">
@@ -1033,7 +1108,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 </div>
 
 <!-- ── BRAND WORK ─────────────────────────────────── -->
-<div class="container">
+<div class="container" id="brand">
   <div class="section-head">
     <h2 data-i18n="anrk-h">Brand and music AR</h2>
     <span class="count" data-i18n="anrk-c">Studio ANRK and freelance, 2020 on</span>
@@ -1042,7 +1117,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     Before ohi I was Creative Technologist at <span>Studio ANRK</span> in London and freelanced alongside: spatial AR with computer vision and machine learning for Ralph Lauren, Samsung, Nike, MLB, Snap Originals and more. A few favourites.
   </p>
 
-  <div class="grid more">
+  <div class="grid more compact collapsible" data-show="8">
 
     <a class="card reveal" href="https://studioanrk.com/work/rl/" target="_blank" rel="noopener">
       <div class="card-media is-link">
@@ -1198,7 +1273,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 </div>
 
 <!-- ── about ──────────────────────────────────────── -->
-<section class="about container">
+<section class="about container" id="about">
   <div class="about-grid">
     <div>
       <div class="about-portrait">
@@ -1309,7 +1384,7 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
 </section>
 
 <!-- ── contact ────────────────────────────────────── -->
-<section class="contact container">
+<section class="contact container" id="contact">
   <div class="contact-eyebrow" data-i18n="contact-eyebrow">Contact</div>
   <h2 data-i18n="contact-h">Let's <em>make</em> something.</h2>
   <a href="mailto:liam@ohi.studio" class="contact-email">liam@ohi.studio</a>
@@ -1342,12 +1417,20 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
     'hero-title': '为智能眼镜与可穿戴设备打造<em>好玩</em>的体验。',
     'hero-lede': '你好，我是 Liam —— ohi 工作室联合创始人。我用前沿科技做好玩的体验：智能眼镜、AR、VR、计算机视觉与 AI。<strong>2025 AWE 年度 XR 开发者奖</strong>得主。',
     'hero-currently': '正在为多个即将发布的 XR 平台开发未公开项目。',
+    'nav-featured': '精选',
+    'nav-specs': 'Specs',
+    'nav-display': 'Display',
+    'nav-brand': '品牌',
+    'nav-about': '关于',
+    'nav-contact': '联系',
     'featured-h': '精选',
     'featured-c': '从这里开始',
     'featured-note': '<span>+</span> 还有一些保密中的项目 —— 当面聊聊吧。',
     'specs-h': 'Specs 镜头',
     'specs-c': '2025 与 2026 的主战场',
-    'specs-note': 'Snap Spectacles 是我花时间最多的地方：为一块戴在脸上的显示屏做游戏、工具和小玩意。其中多个作品赢得了 <span>Spectacles 社区挑战赛</span>，并转化为合同项目。',
+    'specs-note': 'Snap Spectacles 是我花时间最多的地方：为一块戴在脸上的显示屏做游戏、工具和小玩意。其中多个作品赢得了 <span>Spectacles 社区挑战赛</span>，并转化为合同项目。下方的 CLAD 系列由 Snap 的 AI 智能体在 Lens Studio 中协助构建。',
+    'display-h': 'Meta Ray-Ban Display',
+    'display-c': '快速原型，几天一个',
     'proto-h': '快速原型',
     'proto-c': '小而快',
     'proto-note': '<span>+</span> 快手活：从草图到戴在脸上只需几天。',
@@ -1513,6 +1596,39 @@ footer { padding: 2.5rem 0; border-top: 1px solid var(--line); }
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+
+  // ─── collapsible grids ──────────────────────────────────
+  document.querySelectorAll('.grid.collapsible').forEach(g => {
+    const limit = parseInt(g.dataset.show || '8', 10);
+    const cards = Array.from(g.querySelectorAll(':scope > .card'));
+    if (cards.length <= limit) return;
+    cards.slice(limit).forEach(c => c.classList.add('is-collapsed'));
+    const btn = document.createElement('button');
+    btn.className = 'show-more';
+    const label = () => btn.textContent = g.dataset.open === '1'
+      ? (currentLang === 'zh' ? '收起' : 'Show fewer')
+      : (currentLang === 'zh' ? `展开全部 ${cards.length} 个` : `Show all ${cards.length}`);
+    label();
+    btn.addEventListener('click', () => {
+      const open = g.dataset.open === '1';
+      g.dataset.open = open ? '0' : '1';
+      cards.slice(limit).forEach(c => c.classList.toggle('is-collapsed', open));
+      cards.slice(limit).forEach(c => { c.classList.add('in'); const v = c.querySelector('video'); if (v && !open) activateVideo(v); });
+      label();
+      if (open) g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    g.appendChild(btn);
+  });
+
+  // ─── section nav highlight ──────────────────────────────
+  const navLinks = Array.from(document.querySelectorAll('.section-nav a'));
+  const navIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  navLinks.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t) navIO.observe(t); });
 
   // ─── scroll reveal ──────────────────────────────────────
   const io = new IntersectionObserver((entries) => {
